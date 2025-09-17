@@ -1,7 +1,12 @@
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
-import { FlatList } from "react-native/types_generated/index";
+import {useState} from "react"
+import { StyleSheet, Text, View, TextInput, Button, FlatList, Pressable } from "react-native";
 
 export default function App() {
+  const [task, setTask] = useState("");
+  const [list, setList] = useState([]);
+  const [editingId, setEditingId] = useState()
+  const [editingText, setEditingText] = useState()
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
@@ -19,9 +24,21 @@ export default function App() {
       </View>
       <FlatList data={list} keyExtractor={(g) => g.id} renderTask={({item}) => {
         return (
-          <View style={styles.}></View>
-        )
-      }} />
+          <View style={styles.task}>
+            {editingId === task.id ? (
+              <TextInput
+                style={styles.TextInput}
+                value={editingText}
+                onChangeText={setEditingText}
+                onSubmitEditing={() => saveEditing(task.id)}
+                autoFocus
+              />
+            ):(
+            )}
+          </View>
+        );
+      }} 
+      />
     </View>
   );
 }
