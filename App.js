@@ -6,7 +6,28 @@ export default function App() {
   const [list, setList] = useState([]);
   const [editingId, setEditingId] = useState()
   const [editingText, setEditingText] = useState()
-  
+
+  const startEditing = (id, name) => {
+    setEditingId(id);
+    setEditingText(name)
+  };
+
+  const saveEdit = (id) => {
+    setList(list.map((g) => (g.id ? {...g, name: editingText} : g)));
+    setEditingId(null);
+    setEditingText("");
+  }
+
+  const addTask = () => {
+    if (task.trim().length === 0) return;
+    setList([...list, { id: Date.now().toString(), name: item}]);
+    setTask("");
+  }
+
+  const removeTask = (id) => {
+    setList(list)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Todo List</Text>
@@ -14,12 +35,11 @@ export default function App() {
         <TextInput
           style={styles.input}
           placeholder="Add Task"
-          // value={task}
-          // onChangeText={setItem}
+          value={task}
+          onChangeText={setTask}
         />
         <Button
-          title="Add Task"
-          //  onPress={addTask}
+          title="Add Task" onPress={addTask}
         />
       </View>
       <FlatList data={list} keyExtractor={(g) => g.id} renderTask={({item}) => {
